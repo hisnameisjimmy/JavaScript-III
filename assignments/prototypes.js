@@ -59,6 +59,20 @@ function Humanoid (attributes) {
     return `${this.name} offers a greeting in ${this.language}`
   }
 }
+
+function Villain (attributes) {
+  Humanoid.call(this, attributes);
+  this.knife = function() {
+    return `${this.name} knifed them in the back!`
+  }
+}
+
+function Hero (attributes) {
+  Humanoid.call(this, attributes);
+  this.sword = function() {
+    return `${this.name} valliantly struck with a sword!`
+  }
+}
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -117,6 +131,41 @@ function Humanoid (attributes) {
       'Dagger',
     ],
     language: 'Elvish',
+  });
+
+  const Russians = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 3,
+      height: 6,
+    },
+    healthPoints: 10,
+    name: 'Tall Guy',
+    team: 'Russia',
+    weapons: [
+      'Choking',
+      'Machine Gun',
+    ],
+    language: 'Russian',
+  });
+
+  const strangeKids = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 6,
+      height: 2,
+    },
+    healthPoints: 5,
+    name: 'Strange Kids',
+    team: 'America',
+    weapons: [
+      'Cattle Prod',
+      'Wits',
+      'Eleven',
+    ],
+    language: 'English',
   });
 
   console.log(mage.createdAt); // Today's date
