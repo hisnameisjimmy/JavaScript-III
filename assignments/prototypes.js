@@ -16,12 +16,29 @@
   * destroy() // prototype method that returns: `${this.name} was removed from the game.`
 */
 
+function GameObject(attributes) {
+  this.createdAt = attributes.createdAt;
+  this.name = attributes.name;
+  this.dimensions = attributes.dimensions;
+  this.destroy = function() {
+    return `${this.name} was removed from the game.`;
+  };
+}
+
 /*
   === CharacterStats ===
   * healthPoints
   * takeDamage() // prototype method -> returns the string '<object name> took damage.'
   * should inherit destroy() from GameObject's prototype
 */
+
+function CharacterStats (attributes) {
+  GameObject.call(this, attributes);
+  this.healthPoints = attributes.healthPoints;
+  this.takeDamage = function() {
+    return `${this.name} took damage.`;
+  };
+}
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -32,6 +49,30 @@
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
 */
+
+function Humanoid (attributes) {
+  CharacterStats.call(this, attributes);
+  this.team = attributes.team;
+  this.weapons = attributes.weapons;
+  this.language = attributes.language;
+  this.greet = function() {
+    return `${this.name} offers a greeting in ${this.language}`
+  }
+}
+
+function Villain (attributes) {
+  Humanoid.call(this, attributes);
+  this.knife = function() {
+    return `${this.name} knifed them in the back!`
+  }
+}
+
+function Hero (attributes) {
+  Humanoid.call(this, attributes);
+  this.sword = function() {
+    return `${this.name} valliantly struck with a sword!`
+  }
+}
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -41,7 +82,7 @@
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-/*
+
   const mage = new Humanoid({
     createdAt: new Date(),
     dimensions: {
@@ -92,6 +133,41 @@
     language: 'Elvish',
   });
 
+  const Russians = new Villain({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 3,
+      height: 6,
+    },
+    healthPoints: 10,
+    name: 'Tall Guy',
+    team: 'Russia',
+    weapons: [
+      'Choking',
+      'Machine Gun',
+    ],
+    language: 'Russian',
+  });
+
+  const strangeKids = new Hero({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 6,
+      height: 2,
+    },
+    healthPoints: 5,
+    name: 'Strange Kids',
+    team: 'America',
+    weapons: [
+      'Cattle Prod',
+      'Wits',
+      'Eleven',
+    ],
+    language: 'English',
+  });
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -102,7 +178,7 @@
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-*/
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
